@@ -7,8 +7,28 @@ import Button from '@/components/common/Button';
 import { Check, Clock, MapPin, Phone, User, CheckCheck, Truck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// Mock data
-const deliveryOrders = [
+// Define delivery status type
+type DeliveryStatus = 'assigned' | 'picked_up' | 'in_transit' | 'delivered';
+
+// Mock data with proper types
+const deliveryOrders: {
+  id: string;
+  customer: {
+    name: string;
+    address: string;
+    phone: string;
+  };
+  items: Array<{
+    id: string;
+    name: string;
+    quantity: number;
+  }>;
+  total: number;
+  status: DeliveryStatus;
+  assignedAt: string;
+  pickedUpAt?: string;
+  deliveredAt?: string;
+}[] = [
   {
     id: 'ORD-001',
     customer: {
@@ -42,7 +62,24 @@ const deliveryOrders = [
   },
 ];
 
-const completedDeliveries = [
+const completedDeliveries: {
+  id: string;
+  customer: {
+    name: string;
+    address: string;
+    phone: string;
+  };
+  items: Array<{
+    id: string;
+    name: string;
+    quantity: number;
+  }>;
+  total: number;
+  status: DeliveryStatus;
+  assignedAt: string;
+  pickedUpAt: string;
+  deliveredAt: string;
+}[] = [
   {
     id: 'ORD-003',
     customer: {
@@ -61,8 +98,6 @@ const completedDeliveries = [
     deliveredAt: '2023-05-14 16:45 PM',
   },
 ];
-
-type DeliveryStatus = 'assigned' | 'picked_up' | 'in_transit' | 'delivered';
 
 interface DeliveryOrderProps {
   order: {
@@ -219,6 +254,7 @@ const DeliveryDashboard: React.FC = () => {
         const updatedOrder = {
           ...orderToUpdate,
           status: newStatus,
+          pickedUpAt: orderToUpdate.pickedUpAt || now, // Ensure pickedUpAt exists
           deliveredAt: now,
         };
         
@@ -229,12 +265,12 @@ const DeliveryDashboard: React.FC = () => {
       // Update status
       setOrders(orders.map(order => {
         if (order.id === orderId) {
-          const updates: any = { status: newStatus };
+          const updates: Partial<typeof order> = { status: newStatus };
           
           if (newStatus === 'picked_up') {
             updates.pickedUpAt = now;
           } else if (newStatus === 'in_transit') {
-            updates.inTransitAt = now;
+            updates.inTransitAt = now as any; // Type coercion for inTransitAt
           }
           
           return { ...order, ...updates };

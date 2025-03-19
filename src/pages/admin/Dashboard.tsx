@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { BarChart3, Package, ShoppingBag, TrendingUp, Truck, Users } from 'lucide-react';
 import MainLayout from '@/components/layout/MainLayout';
 import Card from '@/components/common/Card';
 import { Area, AreaChart, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid, BarChart, Bar } from 'recharts';
-import { OrderCard, type Order } from '@/components/common/OrderCard';
+import OrderCard, { type Order } from '@/components/common/OrderCard';
 
 // Mock data for dashboard
 const salesData = [

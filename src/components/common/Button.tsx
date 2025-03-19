@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-type ButtonVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+type ButtonVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link' | 'primary';
 type ButtonSize = 'default' | 'sm' | 'lg' | 'icon';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -30,8 +30,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const isDisabled = disabled || loading;
     
     return (
-      <motion.button
-        whileTap={{ scale: isDisabled ? 1 : 0.97 }}
+      <button
         ref={ref}
         disabled={isDisabled}
         className={cn(
@@ -45,6 +44,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           variant === 'secondary' && 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
           variant === 'ghost' && 'hover:bg-accent hover:text-accent-foreground',
           variant === 'link' && 'text-primary underline-offset-4 hover:underline',
+          variant === 'primary' && 'bg-primary text-primary-foreground hover:bg-primary/90',
           
           // Size styles
           size === 'default' && 'h-10 px-4 py-2',
@@ -69,7 +69,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {icon && iconPosition === 'right' && (
           <span className="ml-2">{icon}</span>
         )}
-      </motion.button>
+      </button>
     );
   }
 );

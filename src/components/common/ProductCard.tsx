@@ -87,7 +87,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <span className="font-semibold text-lg">${product.price.toFixed(2)}</span>
           
           <Button 
-            variant="primary" 
+            variant="default" 
             size="sm"
             disabled={isOutOfStock}
             onClick={() => onAddToCart && onAddToCart(product)}
